@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dyeus/Auth/Otp.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,16 +18,15 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  TextEditingController _phonesignin = TextEditingController();
-  TextEditingController _phonesignup = TextEditingController();
+  final TextEditingController _phonesignin = TextEditingController();
+  final TextEditingController _phonesignup = TextEditingController();
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
   final RoundedLoadingButtonController _btnController2 =
       RoundedLoadingButtonController();
-  bool _validate = false;
-  var _formKey = GlobalKey<FormState>();
-  var _formKey1 = GlobalKey<FormState>();
-  FocusNode _focusNode = FocusNode();
+  final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -40,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        FocusScope.of(context).requestFocus(new FocusNode());
+        FocusScope.of(context).requestFocus( FocusNode());
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -65,10 +63,10 @@ class _LoginScreenState extends State<LoginScreen>
                     border: Border.all(
                       color: HexColor('#E2E2E2'),
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
                 child: TabBar(
                   splashFactory: InkRipple.splashFactory,
-                  splashBorderRadius: BorderRadius.all(Radius.circular(20)),
+                  splashBorderRadius: const BorderRadius.all(Radius.circular(20)),
                   labelColor: Colors.black,
                   labelStyle: TextStyle(
                     fontFamily:
@@ -92,9 +90,9 @@ class _LoginScreenState extends State<LoginScreen>
                   controller: _tabController,
                   isScrollable: false,
                   indicatorSize: TabBarIndicatorSize.tab,
-                  tabs: <Widget>[
-                    const Tab(text: 'Signin'),
-                    const Tab(text: 'Signup'),
+                  tabs: const <Widget>[
+                    Tab(text: 'Signin'),
+                    Tab(text: 'Signup'),
                   ],
                 ),
               ),
@@ -102,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen>
                 child: TabBarView(controller: _tabController, children: [
                   //signin
                   Container(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen>
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(
+                        const Text(
                           'Please login with your phone number',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
@@ -132,19 +130,19 @@ class _LoginScreenState extends State<LoginScreen>
                                 color: Colors.grey,
                               ),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                                  const BorderRadius.all(Radius.circular(10))),
                           child: IntrinsicHeight(
                             child: Row(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img.png'),
                                   width: 40,
                                   height: 40,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
@@ -155,10 +153,10 @@ class _LoginScreenState extends State<LoginScreen>
                                     color: HexColor('#9B9B9B'),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 35,
                                   child: VerticalDivider(
                                     thickness: 1,
@@ -166,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     color: HexColor('#9B9B9B'),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Expanded(
@@ -188,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       minLines: 1,
                                       validator: (input) {
                                         if (input!.isEmpty ||
-                                            input!.length < 10) {
+                                            input.length < 10) {
                                           return 'Enter proper phone number';
                                         }
                                         return null;
@@ -206,14 +204,9 @@ class _LoginScreenState extends State<LoginScreen>
                         RoundedLoadingButton(
                           width: 500,
                           color: HexColor('#BFFB62'),
-                          child: Text('Continue',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500)),
                           controller: _btnController1,
                           onPressed: () {
-                            Timer(Duration(seconds: 1), () {
+                            Timer(const Duration(seconds: 1), () {
                               _btnController1.success();
                             });
                             if (_formKey.currentState!.validate()) {
@@ -226,8 +219,13 @@ class _LoginScreenState extends State<LoginScreen>
                             }
                           },
                           successColor: HexColor('#BFFB62'),
-                          resetDuration: Duration(seconds: 3),
+                          resetDuration: const Duration(seconds: 3),
                           resetAfterDuration: true,
+                          child: const Text('Continue',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500)),
                         ),
                         SizedBox(
                           height: 4.h,
@@ -268,13 +266,13 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: HexColor('#E2E2E2'),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
+                                    const BorderRadius.all(Radius.circular(25))),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 22.w,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img_1.png'),
                                   width: 30,
                                   height: 30,
@@ -282,12 +280,12 @@ class _LoginScreenState extends State<LoginScreen>
                                 SizedBox(
                                   width: 4.w,
                                 ),
-                                Text(
+                                const Text(
                                   'Connect to',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400, fontSize: 14),
                                 ),
-                                Text(
+                                const Text(
                                   ' Metamask',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500, fontSize: 14),
@@ -308,13 +306,13 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: HexColor('#E2E2E2'),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
+                                    const BorderRadius.all(Radius.circular(25))),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 24.w,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img_2.png'),
                                   width: 30,
                                   height: 30,
@@ -322,12 +320,12 @@ class _LoginScreenState extends State<LoginScreen>
                                 SizedBox(
                                   width: 4.w,
                                 ),
-                                Text(
+                                const Text(
                                   'Connect to',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400, fontSize: 14),
                                 ),
-                                Text(
+                                const Text(
                                   ' Google',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500, fontSize: 14),
@@ -348,13 +346,13 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: HexColor('#E2E2E2'),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
+                                    const BorderRadius.all(Radius.circular(25))),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 26.w,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img_3.png'),
                                   width: 30,
                                   height: 30,
@@ -362,14 +360,14 @@ class _LoginScreenState extends State<LoginScreen>
                                 SizedBox(
                                   width: 4.w,
                                 ),
-                                Text(
+                                const Text(
                                   'Connect to',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14,
                                       color: Colors.white),
                                 ),
-                                Text(
+                                const Text(
                                   ' Apple',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
@@ -411,7 +409,7 @@ class _LoginScreenState extends State<LoginScreen>
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -427,7 +425,7 @@ class _LoginScreenState extends State<LoginScreen>
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(
+                        const Text(
                           'Please signup with your phone number to get registered',
                           textScaleFactor: 1.1,
                           style: TextStyle(
@@ -442,19 +440,19 @@ class _LoginScreenState extends State<LoginScreen>
                                 color: Colors.grey,
                               ),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                                  const BorderRadius.all(Radius.circular(10))),
                           child: IntrinsicHeight(
                             child: Row(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img.png'),
                                   width: 40,
                                   height: 40,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
@@ -465,10 +463,10 @@ class _LoginScreenState extends State<LoginScreen>
                                     color: HexColor('#9B9B9B'),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 35,
                                   child: VerticalDivider(
                                     thickness: 1,
@@ -476,7 +474,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     color: HexColor('#9B9B9B'),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Expanded(
@@ -497,7 +495,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       minLines: 1,
                                       validator: (input) {
                                         if (input!.isEmpty ||
-                                            input!.length < 10) {
+                                            input.length < 10) {
                                           return 'Enter proper phone number';
                                         }
                                         return null;
@@ -515,14 +513,9 @@ class _LoginScreenState extends State<LoginScreen>
                         RoundedLoadingButton(
                           width: 500,
                           color: HexColor('#BFFB62'),
-                          child: Text('Continue',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500)),
                           controller: _btnController2,
                           onPressed: () {
-                            Timer(Duration(seconds: 1), () {
+                            Timer(const Duration(seconds: 1), () {
                               _btnController2.success();
                             });
                             if (_formKey1.currentState!.validate()) {
@@ -534,8 +527,13 @@ class _LoginScreenState extends State<LoginScreen>
                             }
                           },
                           successColor: HexColor('#BFFB62'),
-                          resetDuration: Duration(seconds: 3),
+                          resetDuration: const Duration(seconds: 3),
                           resetAfterDuration: true,
+                          child: const Text('Continue',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500)),
                         ),
                         SizedBox(
                           height: 4.h,
@@ -576,13 +574,13 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: HexColor('#E2E2E2'),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
+                                    const BorderRadius.all(Radius.circular(25))),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 22.w,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img_1.png'),
                                   width: 30,
                                   height: 30,
@@ -590,12 +588,12 @@ class _LoginScreenState extends State<LoginScreen>
                                 SizedBox(
                                   width: 4.w,
                                 ),
-                                Text(
+                                const Text(
                                   'Connect to',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400, fontSize: 14),
                                 ),
-                                Text(
+                                const Text(
                                   ' Metamask',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500, fontSize: 14),
@@ -616,13 +614,13 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: HexColor('#E2E2E2'),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
+                                    const BorderRadius.all(Radius.circular(25))),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 24.w,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img_2.png'),
                                   width: 30,
                                   height: 30,
@@ -630,12 +628,12 @@ class _LoginScreenState extends State<LoginScreen>
                                 SizedBox(
                                   width: 4.w,
                                 ),
-                                Text(
+                                const Text(
                                   'Connect to',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400, fontSize: 14),
                                 ),
-                                Text(
+                                const Text(
                                   ' Google',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500, fontSize: 14),
@@ -656,13 +654,13 @@ class _LoginScreenState extends State<LoginScreen>
                                   color: HexColor('#E2E2E2'),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
+                                    const BorderRadius.all(Radius.circular(25))),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 26.w,
                                 ),
-                                Image(
+                                const Image(
                                   image: AssetImage('assets/img_3.png'),
                                   width: 30,
                                   height: 30,
@@ -670,14 +668,14 @@ class _LoginScreenState extends State<LoginScreen>
                                 SizedBox(
                                   width: 4.w,
                                 ),
-                                Text(
+                                const Text(
                                   'Connect to',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14,
                                       color: Colors.white),
                                 ),
-                                Text(
+                                const Text(
                                   ' Apple',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,

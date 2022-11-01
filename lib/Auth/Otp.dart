@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dyeus/Auth/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,79 +8,70 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:timer_count_down/timer_controller.dart';
-import 'package:timer_count_down/timer_count_down.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
   String phone;
-  OtpScreen(this.phone);
+  OtpScreen(this.phone, {super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMixin{
-  bool firstStateEnabled = false;
-  final CountdownController controller = CountdownController();
-  final int seconds = 2;
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
-  TextEditingController _mpinController = TextEditingController();
   bool validateOTP = false;
   bool _visible = false;
-  bool _onCLick = true;
+  // bool _onCLick = true;
   String? _verificationCode;
   int? _resendToken;
-  late AnimationController _animationController;
-  late Animation _colorTween;
-  FocusNode _focusNode = FocusNode();
+  // late AnimationController _animationController;
+  // late Animation _colorTween;
+  // FocusNode _focusNode = FocusNode();
   bool hidePIN = true;
   bool validatePIN = false;
 
   @override
   Widget build(BuildContext context) {
-    const borderColor = Color.fromRGBO(30, 60, 87, 1);
+    // const borderColor = Color.fromRGBO(30, 60, 87, 1);
 
-    final defaultPinTheme = PinTheme(
-      width: 40,
-      height: 40,
-      textStyle: GoogleFonts.poppins(
-        fontSize: 22,
-        color: const Color.fromRGBO(30, 60, 87, 1),
-      ),
-      decoration: const BoxDecoration(),
-    );
-
-    final cursor = Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          width: 40,
-          height: 3,
-          decoration: BoxDecoration(
-            color: borderColor,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ],
-    );
-    final preFilledWidget = Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          width: 40,
-          height: 3,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ],
-    );
+    // final defaultPinTheme = PinTheme(
+    //   width: 40,
+    //   height: 40,
+    //   textStyle: GoogleFonts.poppins(
+    //     fontSize: 22,
+    //     color: const Color.fromRGBO(30, 60, 87, 1),
+    //   ),
+    //   decoration: const BoxDecoration(),
+    // );
+    //
+    // final cursor = Column(
+    //   mainAxisAlignment: MainAxisAlignment.end,
+    //   children: [
+    //     Container(
+    //       width: 40,
+    //       height: 3,
+    //       decoration: BoxDecoration(
+    //         color: borderColor,
+    //         borderRadius: BorderRadius.circular(8),
+    //       ),
+    //     ),
+    //   ],
+    // );
+    // final preFilledWidget = Column(
+    //   mainAxisAlignment: MainAxisAlignment.end,
+    //   children: [
+    //     Container(
+    //       width: 40,
+    //       height: 3,
+    //       decoration: BoxDecoration(
+    //         color: Colors.white,
+    //         borderRadius: BorderRadius.circular(8),
+    //       ),
+    //     ),
+    //   ],
+    // );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -93,7 +85,7 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   color: Colors.black,
                 )),
@@ -110,7 +102,7 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
             Padding(
               padding: const EdgeInsets.only(left: 17),
               child: Text(
-                'A six digit code has been sent to +91 ' + widget.phone,
+                'A six digit code has been sent to +91 ${widget.phone}',
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12.sp),
               ),
             ),
@@ -235,7 +227,7 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
                       .then((value) async {
                     if (value.user != null) {
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Otp verified')));
+                          .showSnackBar(const SnackBar(content: Text('Otp verified')));
                       // Timer(Duration(seconds: 3), () {
                       //   Navigator.pushAndRemoveUntil(
                       //       context,
@@ -259,7 +251,7 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 AnimatedOpacity(
@@ -267,7 +259,7 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
                     duration: const Duration(milliseconds: 500),
                     child: InkWell(
                       onTap: () {
-                        print('tapped');
+                        log('tapped');
                         _verifyPhone();
                         Fluttertoast.showToast(
                           msg: 'OTP sent successfully',
@@ -297,9 +289,9 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
                           width: 350,
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(20)),
                               color: HexColor('#BFFB62')),
-                          child: Center(
+                          child: const Center(
                               child: Text(
                             'Resend OTP',
                             style: TextStyle(
@@ -317,16 +309,16 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "Resend OTP in  ",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 TweenAnimationBuilder(
                   tween: Tween(begin: 30.0, end: 0.0),
-                  duration: Duration(seconds: 30),
+                  duration: const Duration(seconds: 30),
                   builder: (_, dynamic value, child) => Text(
                     "00:${value.toInt()}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
@@ -353,7 +345,7 @@ class _OtpScreenState extends State<OtpScreen> with SingleTickerProviderStateMix
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              print("user ${value.user}");
+              log("user ${value.user}");
               // Timer(Duration(seconds: 3), () {
               //   Navigator.pushAndRemoveUntil(
               //       context,
